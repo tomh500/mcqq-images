@@ -1,0 +1,30 @@
+name: Build universal client mod
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '25'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/cache@v4
+        with:
+          path: .cache
+          key: minecraft-deps-${{ hashFiles('versions.lock.json') }}
+      - run: python build.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: mcqq-images-universal
+          path: |
+            build/libs/*.jar
+            build/compatibility-report.json
