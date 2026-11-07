@@ -72,15 +72,21 @@ def main():
         return str(path) if path.exists() else name
     loader_url='https://maven.fabricmc.net/net/fabricmc/fabric-loader/0.19.5/fabric-loader-0.19.5.jar'
     loader=get(loader_url,CACHE/'fabric-loader.jar',urllib.request.urlopen(loader_url+'.sha1').read().decode().strip())
-    classes=ROOT/'build/classes';classes.mkdir(parents=True,exist_ok=True)
+    classes=ROOT/'build/classes'
+    assert classes.resolve().is_relative_to((ROOT/'build').resolve())
+    if classes.exists():shutil.rmtree(classes)
+    classes.mkdir(parents=True,exist_ok=True)
     sources=list((ROOT/'src/main/java').rglob('*.java'))
     subprocess.run([executable('javac'),'--release','21','-proc:none','-encoding','UTF-8','-cp',str(loader),'-d',str(classes),*map(str,sources)],check=True)
-    tests=ROOT/'build/test';tests.mkdir(exist_ok=True)
+    tests=ROOT/'build/test'
+    assert tests.resolve().is_relative_to((ROOT/'build').resolve())
+    if tests.exists():shutil.rmtree(tests)
+    tests.mkdir(exist_ok=True)
     subprocess.run([executable('javac'),'--release','21','-encoding','UTF-8','-cp',os.pathsep.join([str(classes),str(loader)]),'-d',str(tests),*map(str,(ROOT/'src/test/java').rglob('*.java'))],check=True)
     for probe in ['DecoderProbe','UniversalProbe']:
-        subprocess.run([executable('java'),'-Djava.awt.headless=true','-cp',os.pathsep.join(map(str,[classes,tests,loader])),'top.luotiany.mcqq.images.'+probe],check=True)
+        subprocess.run([executable('java'),'-Djava.awt.headless=true','-cp',os.pathsep.join(map(str,[classes,tests,loader])),'top.luotiany1.mcqq.images.'+probe],check=True)
     (ROOT/'build/compatibility-report.json').write_text(json.dumps({'versions':report,'status':'API declarations and core tests verified; in-game visual acceptance required'},indent=2)+'\n')
-    output=ROOT/'build/libs/mcqq-images-1.1.0-beta.1-universal.jar';output.parent.mkdir(exist_ok=True)
+    output=ROOT/'build/libs/mcqq-images-1.1.0-beta.2-universal.jar';output.parent.mkdir(exist_ok=True)
     with zipfile.ZipFile(output,'w',zipfile.ZIP_DEFLATED) as jar:
         for folder in [classes,ROOT/'src/main/resources',ROOT/'build/resources']:
             for path in sorted(folder.rglob('*')):

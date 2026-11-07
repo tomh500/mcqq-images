@@ -6,7 +6,7 @@
 
 1. 安装 Fabric Loader **0.19.3 或更新版本**。
 2. 安装与你的 Minecraft 版本匹配的 Fabric API。
-3. 将发布页中的 `mcqq-images-1.1.0-beta.1-universal.jar` 放进客户端 `mods` 目录并重启游戏。删除旧版 `mcqq-images` JAR，避免同一 Mod 重复安装。
+3. 将发布页中的 `mcqq-images-1.1.0-beta.2-universal.jar` 放进客户端 `mods` 目录并重启游戏。删除旧版 `mcqq-images` JAR，避免同一 Mod 重复安装。
 
 只安装到客户端。Minecraft 1.21.x 使用 Java 21 或更新版本；26.x 游戏本身要求 Java 25。Mod 自身所有类编译为 Java 21 字节码。
 
@@ -35,7 +35,7 @@ PNG 颜色、GIF 合成和播放时间、尺寸限制、URL 规则、反射参�
 python build.py
 ```
 
-产物：`build/libs/mcqq-images-1.1.0-beta.1-universal.jar`。验证报告：`build/compatibility-report.json`。CI 同时上传它们。
+产物：`build/libs/mcqq-images-1.1.0-beta.2-universal.jar`。验证报告：`build/compatibility-report.json`。CI 同时上传它们。
 
 `versions.lock.json` 固定官方元数据和 Fabric API 版本/摘要。构建依赖缓存在 `.cache`，不上传 Minecraft JAR、游戏素材或完整映射；发行 JAR 仅包含自己的代码和所需类的名字桥接表。首次构建需联网，下载约数百MB依赖。没有把 Fabric API、Fabric Loader 或 Minecraft 打进发行 JAR。
 

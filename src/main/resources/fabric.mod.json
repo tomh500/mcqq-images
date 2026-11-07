@@ -1,11 +1,11 @@
 {
   "schemaVersion": 1,
   "id": "mcqq_images",
-  "version": "1.1.0-beta.1",
+  "version": "1.1.0-beta.2",
   "name": "MC QQ Images",
   "description": "QQ image and animated GIF previews, one client JAR for Minecraft 1.21.4 through 26.3.",
   "environment": "client",
-  "entrypoints": {"client": ["top.luotiany.mcqq.images.UniversalImages"]},
+  "entrypoints": {"client": ["top.luotiany1.mcqq.images.UniversalImages"]},
   "contact": {"sources": "https://github.com/tomh500/mcqq-images"},
   "license": "MIT",
   "depends": {
